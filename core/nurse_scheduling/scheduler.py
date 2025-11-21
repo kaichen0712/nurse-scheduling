@@ -174,6 +174,7 @@ def schedule_with_logger(
         status = solver.Solve(ctx.model, solution_printer)
 
     log(f"求解結束！狀態：{solver.StatusName(status)}")
+    ctx.solver_status = solver.StatusName(status)
 
     found = status in (cp_model.OPTIMAL, cp_model.FEASIBLE)
     if status == cp_model.OPTIMAL:
