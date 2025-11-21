@@ -70,7 +70,7 @@ export default function OptimizeAndExportPage() {
     };
   }, []);
 
-  async function checkAndDownload(taskId: string, apiEndpoint: string, setLogs: any) {
+  async function checkAndDownload(taskId: string, apiEndpoint: string, setLogs: React.Dispatch<React.SetStateAction<string>>) {
   try {
     const dlRes = await fetch(`${apiEndpoint}/task/${taskId}/download`);
 
@@ -203,10 +203,14 @@ export default function OptimizeAndExportPage() {
         setIsLoading(false);
       };
 
-    } catch (error: any) {
-      setErrorMessage(error.message || '啟動失敗');
-      setIsLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+      setErrorMessage(error.message);
+    } else {
+      setErrorMessage('啟動失敗');
     }
+    setIsLoading(false);
+      }
   };
 
   return (
