@@ -240,7 +240,6 @@ export default function OptimizeAndExportPage() {
           </ul>
         </div>
       )}
-      
       <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
         <h3 className="text-lg font-medium text-amber-800 mb-3 flex items-center gap-2">
           <FiAlertCircle className="h-5 w-5" />
