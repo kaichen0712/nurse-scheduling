@@ -22,7 +22,8 @@ def schedule(file_content: bytes, deterministic=False, avoid_solution=None, pret
         avoid_solution=avoid_solution,
         prettify=prettify,
         timeout=timeout,
-        logger=None  # 不傳 logger 
+        logger=None,  # 不傳 logger 
+        testing=True,
     )
 
 
@@ -34,6 +35,7 @@ def schedule_with_logger(
     prettify=False,
     timeout: int | None = None,
     logger: Optional[Callable[[str], None]] = None,
+    testing: bool = False,  # 👉 新增：測試模式開關
 ):
     """
     logger: 如果傳入，就會即時呼叫 logger("訊息\n")，用於 SSE
@@ -158,16 +160,21 @@ def schedule_with_logger(
     solution_printer = LiveSolutionPrinter()
 
     # 讓 OR-Tools 自己印的 log 推到前端
-    solver.parameters.log_search_progress = True
+    solver.parameters.log_search_progress = not testing  # 測試模式下關閉，避免干擾測試輸出
 
     if timeout is not None:
         solver.parameters.max_time_in_seconds = float(timeout)
         log(f"時間限制：{timeout} 秒")
 
     log("開始求解！（即時日誌如下）")
-    status = solver.Solve(ctx.model, solution_printer)
+    if testing:
+        status = solver.Solve(ctx.model)
+    else:
+        solution_printer = LiveSolutionPrinter()
+        status = solver.Solve(ctx.model, solution_printer)
 
     log(f"求解結束！狀態：{solver.StatusName(status)}")
+    ctx.solver_status = solver.StatusName(status)
 
     found = status in (cp_model.OPTIMAL, cp_model.FEASIBLE)
     if status == cp_model.OPTIMAL:

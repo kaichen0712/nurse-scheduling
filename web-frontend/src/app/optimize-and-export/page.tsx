@@ -70,7 +70,7 @@ export default function OptimizeAndExportPage() {
     };
   }, []);
 
-  async function checkAndDownload(taskId: string, apiEndpoint: string, setLogs: any) {
+  async function checkAndDownload(taskId: string, apiEndpoint: string, setLogs: React.Dispatch<React.SetStateAction<string>>) {
   try {
     const dlRes = await fetch(`${apiEndpoint}/task/${taskId}/download`);
 
@@ -115,7 +115,7 @@ export default function OptimizeAndExportPage() {
     window.URL.revokeObjectURL(url);
     setLogs((prev: string) => prev + "\n📥 檔案下載完成！\n");
 
-  } catch (err) {
+  } catch {
     setLogs((prev: string) => prev + "\n❌ 下載發生錯誤（JS Exception）。\n");
   }
 }
@@ -203,10 +203,14 @@ export default function OptimizeAndExportPage() {
         setIsLoading(false);
       };
 
-    } catch (error: any) {
-      setErrorMessage(error.message || '啟動失敗');
-      setIsLoading(false);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+      setErrorMessage(error.message);
+    } else {
+      setErrorMessage('啟動失敗');
     }
+    setIsLoading(false);
+      }
   };
 
   return (
@@ -236,8 +240,6 @@ export default function OptimizeAndExportPage() {
           </ul>
         </div>
       )}
-
-     
       <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
         <h3 className="text-lg font-medium text-amber-800 mb-3 flex items-center gap-2">
           <FiAlertCircle className="h-5 w-5" />
