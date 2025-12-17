@@ -5,7 +5,7 @@ import datetime
 # * [MODA Open Data](https://data.gov.tw/dataset/14718)
 # * [Holidays Python Package (Taiwan)](https://github.com/vacanza/holidays/blob/dev/holidays/countries/taiwan.py)
 
-valid_date_range = (datetime.date(2023, 1, 1), datetime.date(2025, 12, 31))
+valid_date_range = (datetime.date(2023, 1, 1), datetime.date(2026, 12, 31))
 
 special_date_info = [
     # 2023
@@ -66,6 +66,28 @@ special_date_info = [
     ('2025-05-31', '端午節', True),
     ('2025-10-06', '中秋節', True),
     ('2025-10-10', '國慶日', True),
+    #2026
+    ('2026-01-01', '開國紀念日', True),
+    ('2026-02-15', '小年夜 (2026-02-16 農曆除夕)', True),
+    ('2026-02-16', '農曆除夕', True),
+    ('2026-02-17', '春節', True),
+    ('2026-02-18', '春節', True),
+    ('2026-02-19', '春節', True),
+    ('2026-02-20', '補假 (小年夜逢例假日補放假)', True),
+    ('2026-02-28', '和平紀念日', True),
+    ('2026-04-03', '補假(兒童節)', True),
+    ('2026-04-04', '兒童節', True),
+    ('2026-04-05', '民族掃墓節', True),
+    ('2026-04-06', '補假(民族掃墓節)', True),
+    ('2026-05-01', '勞動節', True),
+    ('2026-06-19', '端午節', True),
+    ('2026-09-25', '中秋節', True),
+    ('2026-10-28', '教師節', True),
+    ('2026-10-9', '補假(國慶日)', True),
+    ('2026-10-10', '國慶日', True),
+    ('2026-10-25', '光復節', False),
+    ('2026-10-26', '補假(光復節)', False),
+    ('2026-12-25', '行憲紀念日', False),
 ]
 
 def is_freeday(date: datetime.date, is_labor: bool = False) -> bool:
