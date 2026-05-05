@@ -106,8 +106,8 @@ npm run dev
 
 **終端機 1 — 後端：**
 
-```powershell
-cd D:\path\to\nurse-scheduling\core
+```powershell 輸入自己的路徑
+cd D:\path\to\nurse-scheduling\core  
 .venv\Scripts\activate
 cd nurse_scheduling
 fastapi dev serve.py
